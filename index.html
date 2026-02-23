@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ben 10 | Omnitrix Event Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00ff41;
+    --dark-green: #00cc33;
+    --neon-green: #39ff14;
+    --black: #060a06;
+    --dark: #0a1a0a;
+    --gray-dark: #111811;
+    --silver: #c0c0c0;
+    --white: #e8ffe8;
+    --omni-glow: 0 0 20px #00ff41, 0 0 40px #00cc33, 0 0 80px rgba(0,255,65,0.3);
+    --card-bg: rgba(0,20,0,0.85);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated BG Grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      linear-gradient(rgba(0,255,65,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,65,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridScroll 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes gridScroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(40px); }
+  }
+
+  /* Particle Stars */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--neon-green);
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    z-index: 1;
+    perspective: 1000px;
+  }
+
+  /* OMNITRIX 3D */
+  .omnitrix-wrapper {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin-bottom: 40px;
+    transform-style: preserve-3d;
+    animation: floatRotate 6s ease-in-out infinite;
+  }
+
+  @keyframes floatRotate {
+    0%, 100% { transform: translateY(0) rotateY(0deg) rotateX(5deg); }
+    25% { transform: translateY(-15px) rotateY(10deg) rotateX(8deg); }
+    50% { transform: translateY(-25px) rotateY(0deg) rotateX(5deg); }
+    75% { transform: translateY(-15px) rotateY(-10deg) rotateX(8deg); }
+  }
+
+  .omnitrix {
+    width: 220px;
+    height: 220px;
+    position: relative;
+  }
+
+  /* Outer ring */
+  .omnitrix-outer {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      #1a1a1a 0deg, #3a3a3a 30deg, #1a1a1a 60deg,
+      #3a3a3a 90deg, #1a1a1a 120deg, #3a3a3a 150deg,
+      #1a1a1a 180deg, #3a3a3a 210deg, #1a1a1a 240deg,
+      #3a3a3a 270deg, #1a1a1a 300deg, #3a3a3a 330deg, #1a1a1a 360deg
+    );
+    box-shadow: 0 0 30px rgba(0,255,65,0.4), inset 0 0 20px rgba(0,0,0,0.8), 0 20px 60px rgba(0,0,0,0.8);
+    border: 3px solid #333;
+    animation: outerRingSpin 8s linear infinite;
+  }
+
+  @keyframes outerRingSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Inner black ring */
+  .omnitrix-inner-ring {
+    position: absolute;
+    inset: 18px;
+    border-radius: 50%;
+    background: #0a0a0a;
+    border: 4px solid #222;
+    box-shadow: inset 0 0 20px rgba(0,255,65,0.1);
+  }
+
+  /* Green core */
+  .omnitrix-core {
+    position: absolute;
+    inset: 45px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #80ff80, #00ff41 40%, #00aa22 70%, #003300);
+    box-shadow: var(--omni-glow), inset 0 0 30px rgba(255,255,255,0.1);
+    animation: corePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes corePulse {
+    0%, 100% { box-shadow: var(--omni-glow); }
+    50% { box-shadow: 0 0 40px #00ff41, 0 0 80px #00cc33, 0 0 120px rgba(0,255,65,0.5); }
+  }
+
+  /* Hourglass symbol */
+  .omnitrix-symbol {
+    position: absolute;
+    inset: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    filter: drop-shadow(0 0 8px rgba(0,0,0,0.8));
+    z-index: 2;
+  }
+
+  .omnitrix-symbol svg {
+    width: 60px;
+    height: 60px;
+    fill: #001a00;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.9));
+  }
+
+  /* Glow ring */
+  .omnitrix-glow-ring {
+    position: absolute;
+    inset: -15px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: conic-gradient(from 0deg, #00ff41, transparent, #00ff41, transparent, #00ff41) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: glowRingSpin 3s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes glowRingSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  /* Shadow under */
+  .omnitrix-shadow {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 20px;
+    background: radial-gradient(ellipse, rgba(0,255,65,0.3), transparent);
+    filter: blur(8px);
+    animation: shadowPulse 6s ease-in-out infinite;
+  }
+
+  @keyframes shadowPulse {
+    0%, 100% { opacity: 0.6; width: 180px; }
+    50% { opacity: 0.9; width: 160px; }
+  }
+
+  /* ============ HERO TEXT ============ */
+  .hero-badge {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 8px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+    animation: fadeSlideUp 0.8s ease 0.2s both;
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(42px, 8vw, 90px);
+    font-weight: 900;
+    line-height: 0.9;
+    text-align: center;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #ffffff 0%, #00ff41 50%, #00aa22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(0,255,65,0.5));
+    animation: fadeSlideUp 0.8s ease 0.4s both;
+    position: relative;
+  }
+
+  .hero-title::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #ffffff 0%, #00ff41 50%, #00aa22 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: blur(20px) brightness(2);
+    opacity: 0.4;
+    z-index: -1;
+  }
+
+  .hero-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(14px, 2.5vw, 20px);
+    font-weight: 300;
+    letter-spacing: 6px;
+    color: rgba(200,255,200,0.6);
+    text-transform: uppercase;
+    margin-top: 10px;
+    animation: fadeSlideUp 0.8s ease 0.6s both;
+  }
+
+  .hero-cta {
+    margin-top: 30px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeSlideUp 0.8s ease 0.8s both;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: #000;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    box-shadow: 0 0 20px rgba(0,255,65,0.5);
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 40px rgba(0,255,65,0.9), 0 0 80px rgba(0,255,65,0.4);
+    transform: translateY(-3px);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+    transform: rotate(45deg) translateX(-100%);
+    transition: 0.5s;
+  }
+
+  .btn-primary:hover::before {
+    transform: rotate(45deg) translateX(100%);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--green);
+    border: 2px solid var(--green);
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  }
+
+  .btn-outline:hover {
+    background: rgba(0,255,65,0.1);
+    box-shadow: 0 0 20px rgba(0,255,65,0.3);
+    transform: translateY(-3px);
+  }
+
+  /* ============ EVENT STATS ============ */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin: 60px auto 0;
+    padding: 0 20px;
+  }
+
+  .stat-card {
+    flex: 1;
+    min-width: 150px;
+    padding: 24px 20px;
+    text-align: center;
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid rgba(0,255,65,0.15);
+    border-right: none;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:last-child { border-right: 1px solid rgba(0,255,65,0.15); }
+
+  .stat-card:hover { transform: translateY(-5px) scale(1.02); }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
+  .stat-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--green);
+    text-shadow: 0 0 20px rgba(0,255,65,0.7);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(200,255,200,0.5);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ============ SECTION ============ */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 8px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #ffffff, var(--green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 50px;
+  }
+
+  /* ============ ALIEN CARDS ============ */
+  .aliens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .alien-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,255,65,0.2);
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    clip-path: polygon(20px 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
+  }
+
+  .alien-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,255,65,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .alien-card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(2deg);
+    border-color: var(--green);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0,255,65,0.3), inset 0 0 30px rgba(0,255,65,0.05);
+  }
+
+  .alien-card:hover::before { opacity: 1; }
+
+  .alien-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+    display: block;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(0,255,65,0.5));
+  }
+
+  .alien-card:hover .alien-icon {
+    transform: scale(1.2) rotateY(20deg);
+  }
+
+  .alien-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .alien-type {
+    font-size: 11px;
+    color: rgba(200,255,200,0.4);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .alien-card .corner-accent {
+    position: absolute;
+    top: 8px; right: 8px;
+    width: 20px; height: 20px;
+    border-top: 2px solid var(--green);
+    border-right: 2px solid var(--green);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .alien-card:hover .corner-accent { opacity: 1; }
+
+  /* ============ REGISTRATION FORM ============ */
+  .form-section {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .form-container {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,255,65,0.2);
+    padding: 50px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,255,65,0.05);
+  }
+
+  .form-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--green), #00cc33, var(--green), transparent);
+  }
+
+  .form-container::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -30%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,255,65,0.04), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* 3D Corner decorations */
+  .form-corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+  }
+
+  .form-corner-tl { top: 10px; left: 10px; border-top: 3px solid var(--green); border-left: 3px solid var(--green); }
+  .form-corner-tr { top: 10px; right: 10px; border-top: 3px solid var(--green); border-right: 3px solid var(--green); }
+  .form-corner-bl { bottom: 10px; left: 10px; border-bottom: 3px solid var(--green); border-left: 3px solid var(--green); }
+  .form-corner-br { bottom: 10px; right: 10px; border-bottom: 3px solid var(--green); border-right: 3px solid var(--green); }
+
+  .form-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(0,255,65,0.5);
+  }
+
+  .form-desc {
+    font-size: 14px;
+    color: rgba(200,255,200,0.5);
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(0,255,65,0.1);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(0,255,65,0.7);
+    text-transform: uppercase;
+  }
+
+  input, select, textarea {
+    background: rgba(0,10,0,0.8);
+    border: 1px solid rgba(0,255,65,0.2);
+    border-top-color: rgba(0,255,65,0.15);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    padding: 14px 18px;
+    outline: none;
+    transition: all 0.3s ease;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(200,255,200,0.2);
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--green);
+    background: rgba(0,20,0,0.9);
+    box-shadow: 0 0 20px rgba(0,255,65,0.15), inset 0 0 10px rgba(0,255,65,0.05);
+  }
+
+  select option { background: #0a1a0a; color: var(--white); }
+
+  textarea { resize: vertical; min-height: 100px; }
+
+  .alien-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .alien-select-btn {
+    background: rgba(0,10,0,0.8);
+    border: 1px solid rgba(0,255,65,0.2);
+    color: rgba(200,255,200,0.6);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    letter-spacing: 1px;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .alien-select-btn span { display: block; font-size: 20px; margin-bottom: 4px; }
+
+  .alien-select-btn:hover,
+  .alien-select-btn.selected {
+    background: rgba(0,60,0,0.6);
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 15px rgba(0,255,65,0.2);
+  }
+
+  .form-submit {
+    margin-top: 30px;
+    text-align: center;
+    position: relative;
+  }
+
+  .submit-btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 18px 60px;
+    background: var(--green);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    clip-path: polygon(20px 0%, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
+    box-shadow: 0 0 30px rgba(0,255,65,0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .submit-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 50px rgba(0,255,65,0.8), 0 0 100px rgba(0,255,65,0.4);
+    transform: translateY(-3px);
+  }
+
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: -10%;
+    transform: translateY(-50%);
+    width: 30px; height: 200%;
+    background: rgba(255,255,255,0.4);
+    filter: blur(10px);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -10%; }
+    100% { left: 110%; }
+  }
+
+  /* ============ TIMELINE ============ */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--green), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+    padding: 25px 30px;
+    background: var(--card-bg);
+    border: 1px solid rgba(0,255,65,0.15);
+    border-left: none;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-item:hover {
+    border-color: rgba(0,255,65,0.4);
+    transform: translateX(10px);
+    box-shadow: -5px 0 0 var(--green), 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px; height: 14px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--green);
+  }
+
+  .timeline-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+
+  .timeline-event {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: rgba(200,255,200,0.5);
+    letter-spacing: 1px;
+  }
+
+  /* ============ DIVIDER ============ */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 40px 0;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,65,0.3), transparent);
+  }
+
+  .divider-icon {
+    font-size: 24px;
+    filter: drop-shadow(0 0 8px rgba(0,255,65,0.7));
+    animation: corePulse 2s ease-in-out infinite;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 20px 60px;
+    border-top: 1px solid rgba(0,255,65,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--green);
+    text-shadow: var(--omni-glow);
+    letter-spacing: 6px;
+    margin-bottom: 10px;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: rgba(200,255,200,0.3);
+  }
+
+  /* ============ SUCCESS ============ */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .success-overlay.active { display: flex; animation: fadeIn 0.4s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .success-omnitrix {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #80ff80, #00ff41 40%, #00aa22 70%, #003300);
+    box-shadow: var(--omni-glow);
+    animation: corePulse 1s ease-in-out infinite, scaleIn 0.6s ease;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0) rotate(-180deg); }
+    to { transform: scale(1) rotate(0deg); }
+  }
+
+  .success-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--green);
+    text-shadow: var(--omni-glow);
+    margin-bottom: 10px;
+    animation: fadeSlideUp 0.5s ease 0.3s both;
+  }
+
+  .success-sub {
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: rgba(200,255,200,0.6);
+    animation: fadeSlideUp 0.5s ease 0.5s both;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 640px) {
+    .form-container { padding: 30px 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .stat-card { min-width: 120px; }
+    .form-group.full { grid-column: 1; }
+  }
+
+  /* 3D floating particles */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    background: var(--green);
+    opacity: 0;
+    animation: particleFloat var(--dur, 8s) ease-in-out infinite var(--delay, 0s);
+  }
+
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeSlideUp 1s ease 1.5s both;
+  }
+
+  .scroll-indicator span {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: rgba(0,255,65,0.4);
+  }
+
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--green);
+    border-bottom: 2px solid var(--green);
+    transform: rotate(45deg);
+    animation: scrollBounce 1.5s ease-in-out infinite;
+    opacity: 0.5;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(5px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-omnitrix">⚡</div>
+  <div class="success-title">REGISTRATION COMPLETE!</div>
+  <div class="success-sub" style="margin-top:10px;">YOUR OMNITRIX IS ACTIVATED</div>
+  <p style="color:rgba(200,255,200,0.4);margin-top:20px;font-size:13px;letter-spacing:2px;">CHECK YOUR EMAIL FOR CONFIRMATION</p>
+  <button onclick="document.getElementById('successOverlay').classList.remove('active')" style="margin-top:30px;font-family:'Orbitron',monospace;font-size:12px;letter-spacing:3px;padding:12px 30px;background:transparent;border:1px solid rgba(0,255,65,0.4);color:var(--green);cursor:pointer;text-transform:uppercase;">CLOSE</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="omnitrix-wrapper">
+    <div class="omnitrix">
+      <div class="omnitrix-outer"></div>
+      <div class="omnitrix-inner-ring"></div>
+      <div class="omnitrix-core"></div>
+      <div class="omnitrix-symbol">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="12" rx="14" ry="10" fill="#001a00"/>
+          <path d="M16 12 L30 32 L44 12 Z" fill="#001a00"/>
+          <path d="M16 48 L30 28 L44 48 Z" fill="#001a00"/>
+          <ellipse cx="30" cy="48" rx="14" ry="10" fill="#001a00"/>
+        </svg>
+      </div>
+      <div class="omnitrix-glow-ring"></div>
+    </div>
+    <div class="omnitrix-shadow"></div>
+  </div>
+
+  <div class="hero-badge">Omnitrix Universe Presents</div>
+  <h1 class="hero-title" data-text="BEN 10">BEN 10</h1>
+  <div style="font-family:'Orbitron',monospace;font-size:clamp(18px,3vw,30px);font-weight:900;letter-spacing:8px;color:var(--green);text-shadow:0 0 20px rgba(0,255,65,0.5);animation:fadeSlideUp 0.8s ease 0.5s both">UNIVERSE SUMMIT</div>
+  <div class="hero-sub">Annual Convention · 2025</div>
+
+  <div class="hero-cta">
+    <a href="#register" class="btn btn-primary">Register Now</a>
+    <a href="#schedule" class="btn btn-outline">View Schedule</a>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat-card">
+    <div class="stat-number" id="counter1">0</div>
+    <div class="stat-label">Heroes Expected</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="counter2">0</div>
+    <div class="stat-label">Alien Forms</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="counter3">0</div>
+    <div class="stat-label">Hours of Events</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-number" id="counter4">0</div>
+    <div class="stat-label">Days</div>
+  </div>
+</div>
+
+<div class="divider"><div class="divider-icon">⬡</div></div>
+
+<!-- Aliens Section -->
+<section>
+  <div class="section-label">Omnitrix Database</div>
+  <div class="section-title">Choose Your Alien</div>
+  <div class="aliens-grid">
+    <div class="alien-card">
+      <div class="corner-accent"></div>
+      <span class="alien-icon">🔥</span>
+      <div class="alien-name">Heatblast</div>
+      <div class="alien-type">Pyronite</div>
+    </div>
+    <div class="alien-card">
+      <div class="corner-accent"></div>
+      <span class="alien-icon">⚡</span>
+      <div class="alien-name">XLR8</div>
+      <div class="alien-type">Kineceleran</div>
+    </div>
+    <div class="alien-card">
+      <div class="corner-accent"></div>
+      <span class="alien-icon">💎</span>
+      <div class="alien-name">Diamondhead</div>
+      <div class="alien-type">Petrosapien</div>
+    </div>
+    <div class="alien-card">
+      <div class="corner-accent"></div>
+      <span class="alien-icon">👁️</span>
+      <div class="alien-name">Grey Matter</div>
+      <div class="alien-type">Galvan</div>
+    </div>
+    <div class="alien-card">
+      <div class="corner-accent"></div>
+      <span class="alien-icon">🦴</span>
+      <div class="alien-name">Four Arms</div>
+      <div class="alien-type">Tetramand</div>
+    </div>
+    <div class="alien-card">
+      <div class="corner-accent"></div>
+      <span class="alien-icon">🌪️</span>
+      <div class="alien-name">Wildvine</div>
+      <div class="alien-type">Florauna</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-icon">⬡</div></div>
+
+<!-- Schedule Section -->
+<section id="schedule">
+  <div class="section-label">Event Programme</div>
+  <div class="section-title">Mission Schedule</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-time">09:00 AM · DAY 1</div>
+      <div class="timeline-event">Omnitrix Activation Ceremony</div>
+      <div class="timeline-desc">Grand opening with special effects and live performances at the main hall</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">11:00 AM · DAY 1</div>
+      <div class="timeline-event">Alien Cosplay Championship</div>
+      <div class="timeline-desc">Showcase your best alien transformation costume on the grand stage</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">02:00 PM · DAY 1</div>
+      <div class="timeline-event">Creator Panel & Q&A</div>
+      <div class="timeline-desc">Meet the creative minds behind the universe — live discussion session</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">05:00 PM · DAY 1</div>
+      <div class="timeline-event">Omnitrix Trivia Battle</div>
+      <div class="timeline-desc">Test your knowledge across all seasons — winners take the Omnitrix trophy</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">10:00 AM · DAY 2</div>
+      <div class="timeline-event">Fan Art & Comics Expo</div>
+      <div class="timeline-desc">Gallery exhibition featuring the best fan creations from around the world</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">07:00 PM · DAY 2</div>
+      <div class="timeline-event">Galaxy Night Gala</div>
+      <div class="timeline-desc">An epic closing ceremony with awards, light shows, and exclusive reveals</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-icon">⬡</div></div>
+
+<!-- Registration Form -->
+<section id="register">
+  <div class="form-section">
+    <div class="section-label" style="text-align:center">Join the Mission</div>
+    <div class="section-title" style="text-align:center">Register Now</div>
+
+    <div class="form-container">
+      <div class="form-corner form-corner-tl"></div>
+      <div class="form-corner form-corner-tr"></div>
+      <div class="form-corner form-corner-bl"></div>
+      <div class="form-corner form-corner-br"></div>
+
+      <div class="form-title">Omnitrix Enrollment</div>
+      <div class="form-desc">Complete your registration to unlock full access to the Ben 10 Universe Summit. All heroes welcome.</div>
+
+      <form id="registrationForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Benjamin" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Tennyson" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="hero@omnitrix.universe" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+1 (555) 000-0000">
+          </div>
+          <div class="form-group full">
+            <label>Event Pass Type</label>
+            <select required>
+              <option value="" disabled selected>Select your pass</option>
+              <option>🌟 Omnitrix VIP Pass — Full Access (₹4999)</option>
+              <option>⚡ Hero Pass — 2-Day Access (₹2499)</option>
+              <option>🔥 Day Pass — Single Day (₹999)</option>
+              <option>👁️ Online Pass — Livestream Only (₹299)</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label>Choose Your Alien Identity</label>
+            <div class="alien-selector">
+              <button type="button" class="alien-select-btn" onclick="selectAlien(this)"><span>🔥</span>Heatblast</button>
+              <button type="button" class="alien-select-btn" onclick="selectAlien(this)"><span>⚡</span>XLR8</button>
+              <button type="button" class="alien-select-btn" onclick="selectAlien(this)"><span>💎</span>Diamondhead</button>
+              <button type="button" class="alien-select-btn" onclick="selectAlien(this)"><span>👁️</span>Grey Matter</button>
+              <button type="button" class="alien-select-btn" onclick="selectAlien(this)"><span>🦴</span>Four Arms</button>
+              <button type="button" class="alien-select-btn" onclick="selectAlien(this)"><span>🌪️</span>Wildvine</button>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Special Requests / Message</label>
+            <textarea placeholder="Any special requirements, accessibility needs, or messages for the team..."></textarea>
+          </div>
+
+          <div class="form-group full" style="flex-direction:row;align-items:center;gap:12px;">
+            <input type="checkbox" id="terms" required style="width:18px;height:18px;clip-path:none;flex-shrink:0;">
+            <label for="terms" style="font-family:'Rajdhani',sans-serif;font-size:13px;letter-spacing:1px;color:rgba(200,255,200,0.5);cursor:pointer;font-weight:400;">I agree to the terms of the Omnitrix Universe Summit and confirm I am ready to transform</label>
+          </div>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="submit-btn">⚡ ACTIVATE REGISTRATION ⚡</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">BEN 10</div>
+  <div style="font-family:'Orbitron',monospace;font-size:11px;letter-spacing:4px;color:rgba(0,255,65,0.4);margin-bottom:10px;">UNIVERSE SUMMIT · 2025</div>
+  <div class="footer-text">It's Hero Time · All Aliens Authorized · Omnitrix Verified</div>
+</footer>
+
+<script>
+  // Stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      width:${Math.random()*2+1}px;
+      height:${Math.random()*2+1}px;
+      --dur:${Math.random()*4+2}s;
+      --delay:${Math.random()*5}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // Floating particles
+  const particlesEl = document.getElementById('particles');
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${size}px;
+      height:${size}px;
+      --dur:${Math.random()*8+6}s;
+      --delay:${Math.random()*8}s;
+      box-shadow: 0 0 ${size*3}px rgba(0,255,65,0.5);
+    `;
+    particlesEl.appendChild(p);
+  }
+
+  // Counter animation
+  function animateCounter(id, target, duration, suffix='') {
+    const el = document.getElementById(id);
+    const start = performance.now();
+    function update(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Trigger counters on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => animateCounter('counter1', 5000, 2000, '+'), 0);
+        setTimeout(() => animateCounter('counter2', 10, 1500), 200);
+        setTimeout(() => animateCounter('counter3', 36, 1500), 400);
+        setTimeout(() => animateCounter('counter4', 2, 800), 600);
+        observer.disconnect();
+      }
+    });
+  });
+  observer.observe(document.getElementById('counter1'));
+
+  // Alien selector
+  function selectAlien(btn) {
+    document.querySelectorAll('.alien-select-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // Form submit
+  document.getElementById('registrationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('successOverlay').classList.add('active');
+  });
+
+  // 3D card tilt effect
+  document.querySelectorAll('.alien-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `translateY(-10px) rotateX(${-y*15}deg) rotateY(${x*15}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  // Parallax on scroll
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    document.querySelector('.omnitrix-wrapper').style.transform = `translateY(${scrollY * 0.1}px)`;
+  });
+</script>
+</body>
+</html>
